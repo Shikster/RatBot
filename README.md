@@ -5,9 +5,9 @@
 
 #### Features
 - Autoscout based on a custom namelist
-- Your namelist is saved locally
-- Send a message to discord via webhook. Read more about setting up webhooks here: [Webhook](https://github.com/Shikster/RatBot#Webhooks)
-- Play a sound on a successful scout
+- Namelist is saved locally
+- Sends a message to discord via webhook. Read more about setting up webhooks here: [Webhook](https://github.com/Shikster/RatBot#Webhooks)
+- Plays a sound on a successful scout
 - Anti AFK (anti camp feature)
 
 
