@@ -19,4 +19,7 @@ After Tampermonkey has been installed, use the button below to add RatBot to you
 ### [Click to Install](https://github.com/Shikster/RatBot/raw/main/RatBot.user.js)
 
 ### Webhooks
+If you want RatBot to send messages to your discord server, you may want to setup a webhook.
+This can be done by creating your own server (you need mod/admin perms), and then right clicking the setting cog in any channel (edit channel).
+Click on integrations, webhooks, and then New Webhook. The name for the webhook doesn't matter, as Rat Bot will override it with it's post function. Copy the WebHook URL and paste it into the SETUP (after Rat Bot has been installed). 
 
