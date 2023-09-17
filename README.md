@@ -1,7 +1,7 @@
 # RatBot
-A scout bot for Aberoth!
-Written by Shikii
-Version number: 1.5
+- A scout bot for Aberoth!
+- Written by Shikii
+- Version number: 1.5
 
 #### Features
 - Autoscout based on a custom namelist
@@ -18,8 +18,7 @@ RatBot has only been tested in Chrome, there might be issues you run into when t
 After Tampermonkey has been installed, use the button below to add RatBot to your TamperMonkey userscripts:
 ### [Click to Install](https://github.com/Shikster/RatBot/raw/main/RatBot.user.js)
 
-### Webhooks
+#### Webhooks
 If you want RatBot to send messages to your discord server, you may want to setup a webhook.
 This can be done by creating your own server (you need mod/admin perms), and then right clicking the setting cog in any channel (edit channel).
 Click on integrations, webhooks, and then New Webhook. The name for the webhook doesn't matter, as Rat Bot will override it with it's post function. Copy the WebHook URL and paste it into the SETUP (after Rat Bot has been installed). 
-
