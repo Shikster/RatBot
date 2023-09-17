@@ -431,7 +431,7 @@ const postUser = (username) => {
             body: JSON.stringify({
                 username: 'Rat',
                 avatar_url: "https://i.imgur.com/9SIkuLc.png",
-                content: `I found: **${username}** at Tavelor, on Red Realm <t:${currentTimestamp}:R>! Squeek!` // Change this line to your liking.
+                content: `I found: **${username}** <t:${currentTimestamp}:R>! Squeek!` // Change this line to your liking.
             })
         }
     );
