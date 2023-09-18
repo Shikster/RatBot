@@ -3,7 +3,7 @@
 // @namespace    https://github.com/Shikster/RatBot.git
 // @version      1.5
 // @description  Eep! I found someone!
-// @author       Shikii
+// @author       Shikii (and Sayob)
 // @match        https://aberoth.com/*
 // @icon         https://static.wikia.nocookie.net/bookofaberoth/images/a/af/Rat.gif/revision/latest/thumbnail/width/360/height/360?cb=20170606123406
 // @grant        GM_getValue
