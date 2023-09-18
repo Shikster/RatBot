@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RatBot
 // @namespace    https://github.com/Shikster/RatBot.git
-// @version      1.5
+// @version      1.6
 // @description  Eep! I found someone!
 // @author       Shikii
 // @match        https://aberoth.com/*
@@ -99,7 +99,7 @@ function createSetupMenu() {
         <h2>Add Names</h2>
 		 <div>
          <b>Adding players:</b> Click the button below to add names to the list you want Rat Bot to scout for. Names on this list will trigger the sound effect and/or send a message to your discord webhook if you have that option enabled.
-         </div>
+		 </div>
         <br>
         <button id="addNamesButton">Add names</button>
 		<br>
@@ -290,6 +290,11 @@ setInterval(() => {
                 usersInRoom.push(username);
             }
         } else if (app.game.Bc.DA[key]['color'] === "#ffafaf") {
+            if (!usersInRoom.includes(username)) {
+                usersInRoom.push(username);
+            }
+        }
+         else if (app.game.Bc.DA[key]['color'] === "white") {
             if (!usersInRoom.includes(username)) {
                 usersInRoom.push(username);
             }
