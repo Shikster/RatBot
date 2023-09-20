@@ -345,6 +345,7 @@ const createFriendMenu = () => {
   const allowedColors = ["#ffffff", "#ffafaf"];
 
   // Populate the menu with available friends with allowed colors
+  const usersInRoom = [];
   for (let key in app.game.Bc.DA) {
     let username = app.game.Bc.DA[key]['H1'];
     let color = app.game.Bc.DA[key]['color'];
