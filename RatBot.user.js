@@ -147,6 +147,17 @@ if (window.location.href === "https://aberoth.com/download.html") {
     createSetupMenu();
 }
 
+//V3
+function shouldDetect (username) {
+	if (useNameList) {
+		return !nameList.some(name => username.startsWith(name));
+	} else {
+		return true;
+	}
+}
+//V3
+
+
 let afkinterval;
 let clicked = true;
 const btn = document.createElement('button');
@@ -282,16 +293,16 @@ setInterval(() => {
         }
 
         if (app.game.Bc.DA[key]['color'] === "#ffffff") {
-            if (!usersInRoom.includes(username)) {
+            if (!usersInRoom.includes(username) && shouldDetect(username)) {
                 usersInRoom.push(username);
             }
         } else if (app.game.Bc.DA[key]['color'] === "#ffafaf") {
-            if (!usersInRoom.includes(username)) {
+            if (!usersInRoom.includes(username) && shouldDetect(username)) {
                 usersInRoom.push(username);
             }
         }
          else if (app.game.Bc.DA[key]['color'] === "white") {
-            if (!usersInRoom.includes(username)) {
+            if (!usersInRoom.includes(username) && shouldDetect (username)) {
                 usersInRoom.push(username);
             }
         }
