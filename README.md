@@ -4,8 +4,9 @@
 - Version number: 1.5
 
 #### Features
-- Autoscout based on a custom namelist
+- Autoscout based on a custom whitelist
 - Namelist is saved locally
+- Names added to the namelist are the names it skips scouting for
 - Sends a message to discord via webhook. Read more about setting up webhooks here: [Webhook](https://github.com/Shikster/RatBot#Webhooks)
 - Plays a sound on a successful scout
 - Anti AFK (anti camp feature)
