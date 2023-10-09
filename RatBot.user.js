@@ -81,7 +81,7 @@ function createSetupMenu() {
          <b>DETECT ON/OFF:</b> Turns rat bot on or off.
          </div>
          <div>
-         <b>ADD NAMES:</b> Paste names you want to be detected like this: Name1, Name2, Name3,...
+         <b>ADD NAMES:</b> Paste names you want to be skipped (whitelisted) like this: Name1, Name2, Name3,...
          </div>
          <div>
          <b>SOUND:</b> Plays Metal Gear's "!" sound when a player is detected.
