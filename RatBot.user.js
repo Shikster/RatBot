@@ -10,6 +10,17 @@
 // @grant        GM_setValue
 // ==/UserScript==
 
+//V3
+function shouldDetect(username) {
+    if (useNameList) {
+        return !nameList.includes(username); // Return true if the username is in the nameList
+    } else {
+        return true; // Always detect if the whitelist is not used
+    }
+}
+//V3
+
+
 function displayPasteNamesPopup() {
     const popupContainer = document.createElement('div');
     popupContainer.style.position = 'fixed';
@@ -143,19 +154,9 @@ setupButton.addEventListener("click", () => {
 });
 
 if (window.location.href === "https://aberoth.com/download.html") {
-
     createSetupMenu();
 }
 
-//V3
-function shouldDetect (username) {
-	if (useNameList) {
-		return !nameList.some(name => username.startsWith(name));
-	} else {
-		return true;
-	}
-}
-//V3
 
 
 let afkinterval;
@@ -301,13 +302,33 @@ setInterval(() => {
                 usersInRoom.push(username);
             }
         }
+/*
          else if (app.game.Bc.DA[key]['color'] === "white") {
             if (!usersInRoom.includes(username) && shouldDetect (username)) {
                 usersInRoom.push(username);
             }
         }
+		*/
     }
 
+
+for (let user of usersInRoom) {
+    if (!cooldown.has(user) && !unpingable.includes(user)) {
+        if (!nameList.includes(user)) { // Check if the user is not in the nameList
+            if (useNameList) {
+                postUser(user);
+            } else if (user !== MY_NAME) {
+                postUser(user);
+            }
+            const currentTime = new Date().toLocaleTimeString();
+            console.log(user, " entered at", currentTime);
+            cooldown.set(user, Date.now());
+        }
+    }
+}
+
+	
+/*
     for (let user of usersInRoom) {
         if (!cooldown.has(user) && !unpingable.includes(user)) {
 
@@ -328,6 +349,8 @@ setInterval(() => {
             }
         }
     }
+*/
+
 
     for (const [name, timestamp] of cooldown.entries()) {
         if (!usersInRoom.includes(name) && Date.now() - timestamp >= COOLDOWN_TIMER) {
