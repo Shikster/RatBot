@@ -262,6 +262,7 @@ setInterval(() => {
         return;
     }
 
+/*
     usersInRoom = [];
     for (let key in app.game.Bc.DA) {
         let username = app.game.Bc.DA[key]['H1'];
@@ -280,6 +281,25 @@ setInterval(() => {
             }
         }
     }
+*/
+
+usersInRoom = [];
+let invisFound = false; // Flag to track if Invis has been found
+for (let key in app.game.Bc.DA) {
+    let username = app.game.Bc.DA[key]['H1'];
+    let color = app.game.Bc.DA[key]['color'];
+
+    if (username === "You hear faint noises nearby." && color === "white" && !invisFound) {
+        // Push Invis into the array only if color is "white" and Invis hasn't been added yet.
+        usersInRoom.push(username);
+        invisFound = true; // Set the flag to true to indicate Invis has been added.
+    } else if (color === "#ffffff" || color === "#ffafaf" ) {
+        // Push other users with the specified colors into the array.
+        if (!usersInRoom.includes(username)) {
+            usersInRoom.push(username);
+        }
+    }
+}
 
     for (let user of usersInRoom) {
         if (!cooldown.has(user) && !unpingable.includes(user)) {
