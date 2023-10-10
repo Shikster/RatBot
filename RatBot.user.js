@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RatBot
 // @namespace    https://github.com/Shikster/RatBot.git
-// @version      1.8
+// @version      1.9
 // @description  Eep! I found someone!
 // @author       Shikii
 // @match        https://aberoth.com/*
