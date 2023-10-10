@@ -92,15 +92,12 @@ function createSetupMenu() {
         <label for="myName">Your Scout Name:</label><br>
         <input type="text" id="myName" name="myName" value="${GM_getValue("MY_NAME", "")}" required><br><br>
         
-        <!-- Add this part for the second webhook URL -->
         <label for="discordUrl2">Discord Webhook URL 2 (Whitelisted Users):</label><br>
         <input type="text" id="discordUrl2" name="discordUrl2" value="${GM_getValue("DISCORDURL2", "")}" required><br><br>
 		
-		<!-- Add this part for audio -->
         <label for="mySound">Change audio. Full link to a .mp3 file:</label><br>
         <input type="text" id="mySound" name="mySound" value="${GM_getValue("MY_AUDIO", "")}" required><br><br>
 
-        <!-- "ADD NAMES" section -->
         <h2>Add Names</h2>
          <div>
          <b>Adding players:</b> Click the button below to add names to the whitelist. Names on this list will be skipped from scouting. Every name that is not on this list will send a message to Discord and/or play a sound effect.
@@ -120,23 +117,22 @@ function createSetupMenu() {
 
     const saveButton = setupContainer.querySelector("#saveButton");
     const discordUrlInput = setupContainer.querySelector("#discordUrl");
-    const discordUrlInput2 = setupContainer.querySelector("#discordUrl2"); // Add this line
+    const discordUrlInput2 = setupContainer.querySelector("#discordUrl2"); 
     const myNameInput = setupContainer.querySelector("#myName");
     const myAudioInput = setupContainer.querySelector("#mySound")
 
     saveButton.addEventListener("click", () => {
         const discordUrl = discordUrlInput.value;
-        const discordUrl2 = discordUrlInput2.value; // Add this line to get the second URL.
+        const discordUrl2 = discordUrlInput2.value; 
         const myName = myNameInput.value;
 	const mySound = myAudioInput.value;
         GM_setValue("DISCORDURL", discordUrl);
-        GM_setValue("DISCORDURL2", discordUrl2); // Save the second URL.
+        GM_setValue("DISCORDURL2", discordUrl2); 
         GM_setValue("MY_NAME", myName);
 	GM_setValue("MY_AUDIO", mySound);
         document.body.removeChild(setupContainer);
     });
 }
-
 
 // Create and initialize setup button and other UI elements
 const setupButton = document.createElement("button");
@@ -167,23 +163,10 @@ toggleBtn.textContent = 'DETECTING ON';
 toggleBtn.style.width = '150px';
 document.body.appendChild(toggleBtn);
 
-/* const useNameListBtn = document.createElement('button');
-useNameListBtn.textContent = 'NAMELIST ON';
-useNameListBtn.style.width = '150px';
-document.body.appendChild(useNameListBtn);
-*/ 
 toggleBtn.addEventListener('click', () => {
     isDetecting = !isDetecting;
     toggleBtn.textContent = isDetecting ? 'DETECTING ON' : 'DETECTING OFF';
 });
-
-/*
-useNameListBtn.addEventListener('click', () => {
-    useNameList = !useNameList;
-    useNameListBtn.textContent = useNameList ? 'NAMELIST ON' : 'NAMELIST OFF';
-    console.log(useNameList);
-});
-*/
 
 // Retrieve the name list from GM storage
 const nameList = GM_getValue("NAME_LIST", []);
@@ -280,27 +263,6 @@ setInterval(() => {
         return;
     }
 
-/*
-    usersInRoom = [];
-    for (let key in app.game.Bc.DA) {
-        let username = app.game.Bc.DA[key]['H1'];
-
-        if (username === "Tavelor") {
-            continue; // Skip scanning Tavelor, if an expanded exclusion list becomes necessary it can be added in the future.
-        }
-
-        if (app.game.Bc.DA[key]['color'] === "#ffffff") {
-            if (!usersInRoom.includes(username) && shouldDetect(username)) {
-                usersInRoom.push(username);
-            }
-        } else if (app.game.Bc.DA[key]['color'] === "#ffafaf") {
-            if (!usersInRoom.includes(username) && shouldDetect(username)) {
-                usersInRoom.push(username);
-            }
-        }
-    }
-*/
-
 usersInRoom = [];
 let invisFound = false; // Flag to track if Invis has been found
 for (let key in app.game.Bc.DA) {
@@ -331,11 +293,10 @@ for (let user of usersInRoom) {
             console.log(user, " entered at", currentTime);
             cooldown.set(user, Date.now());
         } else {
-            postSkippedName(user); // Add this line to post skipped names.
+            postSkippedName(user);
         }
     }
 }
-
 
     for (const [name, timestamp] of cooldown.entries()) {
         if (!usersInRoom.includes(name) && Date.now() - timestamp >= COOLDOWN_TIMER) {
@@ -366,7 +327,7 @@ const postUser = (username) => {
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
 if (isSoundEnabled) {
-    const customSoundUrl = GM_getValue("MY_AUDIO", ""); // Get the custom sound URL from Tampermonkey storage
+    const customSoundUrl = GM_getValue("MY_AUDIO", ""); 
     if (customSoundUrl) {
         const audio = new Audio(customSoundUrl);
         audio.play();
@@ -377,7 +338,6 @@ if (isSoundEnabled) {
         audio.play();
     }
 }
-
 
     fetch(
         `${DISCORDURL}`,
@@ -397,7 +357,7 @@ if (isSoundEnabled) {
 
 // Function to post skipped names to the webhook with cooldown
 function postSkippedName(username) {
-    const DISCORDURL2 = GM_getValue("DISCORDURL2", ""); // Get the second Discord webhook URL
+    const DISCORDURL2 = GM_getValue("DISCORDURL2", "");
 
     if (DISCORDURL2) {
         const currentTime = Date.now();
