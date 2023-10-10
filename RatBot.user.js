@@ -338,42 +338,48 @@ soundToggleButton.addEventListener('click', () => {
 });
 
 
-// Function to post a user to Discord
+//Scouting for unknowns
 const postUser = (username) => {
     const options = { hour: '2-digit', minute: '2-digit', timeZone: 'UTC', hour12: false };
     const currentTimeHere = new Date().toLocaleTimeString('en-US', { ...options, timeZone: 'Europe/Berlin' });
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
-if (isSoundEnabled) {
-    const customSoundUrl = GM_getValue("MY_AUDIO", ""); 
-    if (customSoundUrl) {
-        const audio = new Audio(customSoundUrl);
-        audio.play();
-    } else {
-        // If the custom sound URL is not set, play a default sound or handle it as needed.
-        const defaultSoundUrl = 'https://us-tuna-sounds-files.voicemod.net/cb9d618a-1795-4c5d-923a-61c767040b3e-1687765406207.mp3';
-        const audio = new Audio(defaultSoundUrl);
-        audio.play();
+    const myName = GM_getValue("MY_NAME", ""); // Get the value from "MyName" field
+
+    if (!excludedNames.includes(username) && username !== myName) {
+        if (isSoundEnabled) {
+            const customSoundUrl = GM_getValue("MY_AUDIO", "");
+            if (customSoundUrl) {
+                const audio = new Audio(customSoundUrl);
+                audio.play();
+            } else {
+                // If the custom sound URL is not set, play a default sound or handle it as needed.
+                const defaultSoundUrl = 'https://us-tuna-sounds-files.voicemod.net/cb9d618a-1795-4c5d-923a-61c767040b3e-1687765406207.mp3';
+                const audio = new Audio(defaultSoundUrl);
+                audio.play();
+            }
+        }
+
+        fetch(
+            `${DISCORDURL}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: 'Rat',
+                    avatar_url: "https://i.imgur.com/9SIkuLc.png",
+                    content: `I found: **${username}** <t:${currentTimestamp}:R>! Squeek!` // Change this line to your liking.
+                })
+            }
+        );
     }
 }
 
-    fetch(
-        `${DISCORDURL}`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: 'Rat',
-                avatar_url: "https://i.imgur.com/9SIkuLc.png",
-                content: `I found: **${username}** <t:${currentTimestamp}:R>! Squeek!` // Change this line to your liking.
-            })
-        }
-    )
-}
 
-// Function to post skipped names to the webhook with cooldown
+
+//Scouting allies
 function postSkippedName(username) {
     const DISCORDURL2 = GM_getValue("DISCORDURL2", "");
     const myName = GM_getValue("MY_NAME", ""); // Get the value from "MyName" field
