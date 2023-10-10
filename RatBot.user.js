@@ -89,7 +89,7 @@ function createSetupMenu() {
          <b>ADD NAMES:</b> Paste names you want to be skipped (whitelisted) like this: Name1, Name2, Name3,...
          </div>
          <div>
-         <b>SOUND:</b> Plays Metal Gear's "!" sound when a player is detected by default but can be changed in the audio field.
+         <b>SOUND:</b> Plays a radar sound when a player is detected by default, but can be changed in the audio field.
          </div>
         <h2>Setup</h2>
         <label for="discordUrl">Discord Webhook URL:</label><br>
@@ -350,7 +350,7 @@ if (isSoundEnabled) {
         audio.play();
     } else {
         // If the custom sound URL is not set, play a default sound or handle it as needed.
-        const defaultSoundUrl = 'https://us-tuna-sounds-files.voicemod.net/a37fc336-638e-469e-99a6-c27a71ae9655-1640243756594.mp3';
+        const defaultSoundUrl = 'https://us-tuna-sounds-files.voicemod.net/cb9d618a-1795-4c5d-923a-61c767040b3e-1687765406207.mp3';
         const audio = new Audio(defaultSoundUrl);
         audio.play();
     }
