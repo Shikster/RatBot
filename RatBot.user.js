@@ -54,6 +54,11 @@ function displayPasteNamesPopup() {
         GM_setValue("NAME_LIST", nameList);
         document.body.removeChild(popupContainer);
     });
+	
+	textArea.addEventListener('keydown',(event)=>{
+		event.stopPropagation();
+	})	
+	
 }
 
 // Function to create the setup menu
@@ -132,6 +137,10 @@ function createSetupMenu() {
 	GM_setValue("MY_AUDIO", mySound);
         document.body.removeChild(setupContainer);
     });
+	
+	setupContainer.addEventListener('keydown',(event)=>{
+		event.stopPropagation();
+	})
 }
 
 // Create and initialize setup button and other UI elements
@@ -142,7 +151,7 @@ document.body.appendChild(setupButton);
 
 setupButton.addEventListener("click", () => {
 createSetupMenu();   
- window.location.href = "https://aberoth.com/download.html";
+ //window.location.href = "https://aberoth.com/download.html";
     setTimeout(() => {
         if (document.getElementById("uniqueElementOnDownloadPage")) {
             createSetupMenu();
@@ -157,6 +166,13 @@ if (window.location.href === "https://aberoth.com/download.html") {
 // Variables for controlling bot behavior
 let isDetecting = true;
 let useNameList = true;
+
+//Excluded list
+const excludedNames = ["Tavelor", "Gomald", "Orc", "Rogue", "Thief", 
+"Wolf", "Alchemist", "Bat", "Black Bat", "Disciple", "Forstyll", "Grand Shaman",
+"Lich", "Master Alchemist", "Master Thief", "Minotaur", "Ourik", "Plague Rat", "Rat",
+"Ratingar", "Rattle Snake", "Satyr", "Satyr Elder", "Shaman", "Skaldor", "Skeleton",
+"Skelet Rat", "Skelet Wolf", "Vampire Bat"];
 
 // Toggle buttons for detecting and using the name list
 const toggleBtn = document.createElement('button');
@@ -359,8 +375,9 @@ if (isSoundEnabled) {
 // Function to post skipped names to the webhook with cooldown
 function postSkippedName(username) {
     const DISCORDURL2 = GM_getValue("DISCORDURL2", "");
+    const myName = GM_getValue("MY_NAME", ""); // Get the value from "MyName" field
 
-    if (DISCORDURL2) {
+    if (DISCORDURL2 && !excludedNames.includes(username) && username !== myName) {
         const currentTime = Date.now();
         const currentTimestamp = Math.floor(currentTime / 1000);
 
@@ -381,6 +398,6 @@ function postSkippedName(username) {
             );
             skippedNameCooldown.set(username, currentTime);
         }
-    };
-};
+    }
+}
 
