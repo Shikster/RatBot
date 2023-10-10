@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         RatBot
 // @namespace    https://github.com/Shikster/RatBot.git
-// @version      1.7
+// @version      1.8
 // @description  Eep! I found someone!
 // @author       Shikii
 // @match        https://aberoth.com/*
@@ -84,18 +84,26 @@ function createSetupMenu() {
          <b>ADD NAMES:</b> Paste names you want to be skipped (whitelisted) like this: Name1, Name2, Name3,...
          </div>
          <div>
-         <b>SOUND:</b> Plays Metal Gear's "!" sound when a player is detected.
+         <b>SOUND:</b> Plays Metal Gear's "!" sound when a player is detected by default but can be changed in the audio field.
          </div>
         <h2>Setup</h2>
         <label for="discordUrl">Discord Webhook URL:</label><br>
         <input type="text" id="discordUrl" name="discordUrl" value="${GM_getValue("DISCORDURL", "")}" required><br><br>
         <label for="myName">Your Scout Name:</label><br>
         <input type="text" id="myName" name="myName" value="${GM_getValue("MY_NAME", "")}" required><br><br>
+        
+        <!-- Add this part for the second webhook URL -->
+        <label for="discordUrl2">Discord Webhook URL 2 (Whitelisted Users):</label><br>
+        <input type="text" id="discordUrl2" name="discordUrl2" value="${GM_getValue("DISCORDURL2", "")}" required><br><br>
+		
+		<!-- Add this part for audio -->
+        <label for="mySound">Change audio. Full link to a .mp3 file:</label><br>
+        <input type="text" id="mySound" name="mySound" value="${GM_getValue("MY_AUDIO", "")}" required><br><br>
 
         <!-- "ADD NAMES" section -->
         <h2>Add Names</h2>
          <div>
-         <b>Adding players:</b> Click the button below to add names the whitelist. Names on this list will be skipped from scouting. Every name that is not on this list will send a message to discord and/or send a sound effect.
+         <b>Adding players:</b> Click the button below to add names to the whitelist. Names on this list will be skipped from scouting. Every name that is not on this list will send a message to Discord and/or play a sound effect.
          </div>
         <br>
         <button id="addNamesButton">Add names</button>
@@ -112,16 +120,23 @@ function createSetupMenu() {
 
     const saveButton = setupContainer.querySelector("#saveButton");
     const discordUrlInput = setupContainer.querySelector("#discordUrl");
+    const discordUrlInput2 = setupContainer.querySelector("#discordUrl2"); // Add this line
     const myNameInput = setupContainer.querySelector("#myName");
+    const myAudioInput = setupContainer.querySelector("#mySound")
 
     saveButton.addEventListener("click", () => {
         const discordUrl = discordUrlInput.value;
+        const discordUrl2 = discordUrlInput2.value; // Add this line to get the second URL.
         const myName = myNameInput.value;
+	const mySound = myAudioInput.value;
         GM_setValue("DISCORDURL", discordUrl);
+        GM_setValue("DISCORDURL2", discordUrl2); // Save the second URL.
         GM_setValue("MY_NAME", myName);
+	GM_setValue("MY_AUDIO", mySound);
         document.body.removeChild(setupContainer);
     });
 }
+
 
 // Create and initialize setup button and other UI elements
 const setupButton = document.createElement("button");
@@ -252,6 +267,9 @@ viewNameListBtn.addEventListener('click', () => {
 const MY_NAME = GM_getValue("MY_NAME", "");
 const DISCORDURL = GM_getValue("DISCORDURL", "");
 const COOLDOWN_TIMER = 30 * 60 * 1000; // 30 minute cooldown before a user can be detected again
+const skippedNameCooldown = new Map();
+const SKIPPED_NAME_COOLDOWN_TIME = 30 * 60 * 1000; // 30 minute cooldown for skipped names (adjust as needed).
+
 let usersInRoom = [];
 let cooldown = new Map();
 let unpingable = [];
@@ -301,20 +319,23 @@ for (let key in app.game.Bc.DA) {
     }
 }
 
-    for (let user of usersInRoom) {
-        if (!cooldown.has(user) && !unpingable.includes(user)) {
-            if (!nameList.includes(user)) { // Check if the user is not in the nameList
-                if (useNameList) {
-                    postUser(user);
-                } else if (user !== MY_NAME) {
-                    postUser(user);
-                }
-                const currentTime = new Date().toLocaleTimeString();
-                console.log(user, " entered at", currentTime);
-                cooldown.set(user, Date.now());
+for (let user of usersInRoom) {
+    if (!cooldown.has(user) && !unpingable.includes(user)) {
+        if (!nameList.includes(user)) {
+            if (useNameList) {
+                postUser(user);
+            } else if (user !== MY_NAME) {
+                postUser(user);
             }
+            const currentTime = new Date().toLocaleTimeString();
+            console.log(user, " entered at", currentTime);
+            cooldown.set(user, Date.now());
+        } else {
+            postSkippedName(user); // Add this line to post skipped names.
         }
     }
+}
+
 
     for (const [name, timestamp] of cooldown.entries()) {
         if (!usersInRoom.includes(name) && Date.now() - timestamp >= COOLDOWN_TIMER) {
@@ -337,16 +358,26 @@ soundToggleButton.addEventListener('click', () => {
     soundToggleButton.textContent = isSoundEnabled ? 'SOUND ON' : 'SOUND OFF';
 });
 
+
 // Function to post a user to Discord
 const postUser = (username) => {
     const options = { hour: '2-digit', minute: '2-digit', timeZone: 'UTC', hour12: false };
     const currentTimeHere = new Date().toLocaleTimeString('en-US', { ...options, timeZone: 'Europe/Berlin' });
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
-    if (isSoundEnabled) {
-        const audio = new Audio('https://us-tuna-sounds-files.voicemod.net/a37fc336-638e-469e-99a6-c27a71ae9655-1640243756594.mp3');
+if (isSoundEnabled) {
+    const customSoundUrl = GM_getValue("MY_AUDIO", ""); // Get the custom sound URL from Tampermonkey storage
+    if (customSoundUrl) {
+        const audio = new Audio(customSoundUrl);
+        audio.play();
+    } else {
+        // If the custom sound URL is not set, play a default sound or handle it as needed.
+        const defaultSoundUrl = 'https://us-tuna-sounds-files.voicemod.net/a37fc336-638e-469e-99a6-c27a71ae9655-1640243756594.mp3';
+        const audio = new Audio(defaultSoundUrl);
         audio.play();
     }
+}
+
 
     fetch(
         `${DISCORDURL}`,
@@ -361,5 +392,34 @@ const postUser = (username) => {
                 content: `I found: **${username}** <t:${currentTimestamp}:R>! Squeek!` // Change this line to your liking.
             })
         }
-    );
+    )
+}
+
+// Function to post skipped names to the webhook with cooldown
+function postSkippedName(username) {
+    const DISCORDURL2 = GM_getValue("DISCORDURL2", ""); // Get the second Discord webhook URL
+
+    if (DISCORDURL2) {
+        const currentTime = Date.now();
+        const currentTimestamp = Math.floor(currentTime / 1000);
+
+        if (!skippedNameCooldown.has(username) || currentTime - skippedNameCooldown.get(username) >= SKIPPED_NAME_COOLDOWN_TIME) {
+            fetch(
+                `${DISCORDURL2}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: 'Rat',
+                        avatar_url: "https://i.imgur.com/9SIkuLc.png",
+                        content: `I saw an ally: **${username}** <t:${currentTimestamp}:R>! Squeek!` // Modify the message as needed.
+                    })
+                }
+            );
+            skippedNameCooldown.set(username, currentTime);
+        }
+    };
 };
+
