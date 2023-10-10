@@ -141,7 +141,8 @@ setupButton.style.width = '80px';
 document.body.appendChild(setupButton);
 
 setupButton.addEventListener("click", () => {
-    window.location.href = "https://aberoth.com/download.html";
+createSetupMenu();   
+ window.location.href = "https://aberoth.com/download.html";
     setTimeout(() => {
         if (document.getElementById("uniqueElementOnDownloadPage")) {
             createSetupMenu();
@@ -150,7 +151,7 @@ setupButton.addEventListener("click", () => {
 });
 
 if (window.location.href === "https://aberoth.com/download.html") {
-    createSetupMenu();
+	createSetupMenu();
 }
 
 // Variables for controlling bot behavior
