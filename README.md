@@ -1,7 +1,7 @@
 # RatBot
 - A scout bot for Aberoth!
 - Written by Shikii (and Sayob)
-- Version number: 1.7
+- Version number: 1.9
 
 #### Features
 - Autoscout based on a custom whitelist
