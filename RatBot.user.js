@@ -172,7 +172,8 @@ const excludedNames = ["Tavelor", "Gomald", "Orc", "Rogue", "Thief",
 "Wolf", "Alchemist", "Bat", "Black Bat", "Disciple", "Forstyll", "Grand Shaman",
 "Lich", "Master Alchemist", "Master Thief", "Minotaur", "Ourik", "Plague Rat", "Rat",
 "Ratingar", "Rattle Snake", "Satyr", "Satyr Elder", "Shaman", "Skaldor", "Skeleton",
-"Skelet Rat", "Skelet Wolf", "Vampire Bat"];
+"Skelet Rat", "Skelet Wolf", "Vampire Bat", "Inala", "Sholop", "Lysis", "Darklow", "Wodon",
+"Magerlin", "Gurun"];
 
 // Toggle buttons for detecting and using the name list
 const toggleBtn = document.createElement('button');
