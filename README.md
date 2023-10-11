@@ -3,6 +3,10 @@
 - Written by Shikii (and Sayob)
 - Version number: 1.9
 
+
+https://github.com/Shikster/RatBot/assets/90510626/423000ed-59f2-4181-96fc-d08a6dbe99fc
+
+
 #### Features
 - Autoscout based on a custom whitelist
 - Namelist is saved locally
