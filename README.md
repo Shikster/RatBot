@@ -1,7 +1,7 @@
 # RatBot
 - A scout bot for Aberoth!
 - Written by Shikii (and Sayob)
-- Version number: 1.9
+- Version number: 2.0
 
 
 https://github.com/Shikster/RatBot/assets/90510626/423000ed-59f2-4181-96fc-d08a6dbe99fc
@@ -14,6 +14,7 @@ https://github.com/Shikster/RatBot/assets/90510626/423000ed-59f2-4181-96fc-d08a6
 - Sends a message to discord via webhook. Read more about setting up webhooks here: [Webhook](https://github.com/Shikster/RatBot#Webhooks)
 - Plays a sound on a successful scout
 - Anti AFK (anti camp feature)
+- NEW! Takes screenshots of enemies and posts them to the webhook.
 
 
 #### Installation
