@@ -323,7 +323,7 @@ for (let user of usersInRoom) {
             console.log(`${name} can be pinged again at`, new Date().toLocaleTimeString());
         }
     }
-}, 1000);
+}, 500);
 
 // Variable for controlling the sound
 let isSoundEnabled = true;
@@ -338,7 +338,19 @@ soundToggleButton.addEventListener('click', () => {
 });
 
 
-//Scouting for unknowns
+//Scouting for unknowns, and making screenshot
+function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[arr.length - 1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+}
+
 const postUser = (username) => {
     const options = { hour: '2-digit', minute: '2-digit', timeZone: 'UTC', hour12: false };
     const currentTimeHere = new Date().toLocaleTimeString('en-US', { ...options, timeZone: 'Europe/Berlin' });
@@ -358,24 +370,31 @@ const postUser = (username) => {
                 const audio = new Audio(defaultSoundUrl);
                 audio.play();
             }
-        }
 
-        fetch(
-            `${DISCORDURL}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: 'Rat',
-                    avatar_url: "https://i.imgur.com/9SIkuLc.png",
-                    content: `I found: **${username}** <t:${currentTimestamp}:R>! Squeek!` // Change this line to your liking.
-                })
-            }
-        );
+            // Capture the game canvas and convert to a File
+            var gameCanvas = document.getElementById('screen');
+            var pngDataUrl = gameCanvas.toDataURL('image/png');
+            var pngFile = dataURLtoFile(pngDataUrl, 'screenshot.png');
+
+            // Create a FormData object
+            const formData = new FormData();
+            formData.append('file', pngFile); // Append the screenshot file
+
+            formData.append('username', 'Rat');
+            formData.append('avatar_url', 'https://i.imgur.com/9SIkuLc.png');
+            formData.append('content', `I found: **${username}** <t:${currentTimestamp}:R>! Squeek!`);
+
+            fetch(
+                `${DISCORDURL}`,
+                {
+                    method: 'POST',
+                    body: formData, // Use the FormData object as the request body
+                }
+            );
+        }
     }
 }
+
 
 
 
