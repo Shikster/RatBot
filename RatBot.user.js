@@ -54,15 +54,25 @@ function displayPasteNamesPopup() {
         document.body.removeChild(popupContainer);
     });
 
-    addButton.addEventListener('click', () => {
-        const usernames = textArea.value.split(',').map(username => username.trim());
-        const validUsernames = usernames.filter(username => username !== '');
-        nameList.push(...validUsernames);
-        textArea.value = '';
-        console.log('Updated nameList:', nameList);
-        GM_setValue("NAME_LIST", nameList);
-        document.body.removeChild(popupContainer);
-    });
+addButton.addEventListener('click', () => {
+    const usernames = textArea.value.split(',').map(username => username.trim());
+    const validUsernames = usernames.filter(username => username !== '');
+    
+    // Remove duplicates from the validUsernames list
+    const uniqueUsernames = [...new Set(validUsernames)];
+    
+    // Filter out the usernames that are already in nameList
+    const newNames = uniqueUsernames.filter(username => !nameList.includes(username));
+
+    // Add the new names to nameList
+    nameList.push(...newNames);
+    
+    textArea.value = '';
+    console.log('Updated nameList:', nameList);
+    GM_setValue("NAME_LIST", nameList);
+    document.body.removeChild(popupContainer);
+});
+
 
     textArea.addEventListener('keydown', (event) => {
         // Prevent event propagation
