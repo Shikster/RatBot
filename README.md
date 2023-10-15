@@ -25,6 +25,11 @@ RatBot has only been tested in Chrome and Firefox, there might be issues with an
 After Tampermonkey has been installed, use the button below to add RatBot to your TamperMonkey userscripts:
 ### [Click to Install](https://github.com/Shikster/RatBot/raw/main/RatBot.user.js)
 
+When RatBot is added to your Tampmonkey scripts, a menu appears when you open Aberoth in the browser. From this menu you can setup: your scout's name, webhook url, audio and whitelist.
+
+![image](https://github.com/Shikster/RatBot/assets/90510626/33684d7b-e614-42e2-afab-06ec228c0fb7)
+
+
 #### Webhooks
 If you want RatBot to send messages to your discord server, you may want to setup a webhook.
 This can be done by creating your own discord server (you need mod/admin perms), and then right clicking the setting cog in any channel (edit channel).
