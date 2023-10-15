@@ -100,7 +100,6 @@ function createSetupMenu() {
         <!-- Your setup menu HTML -->
         <div style="max-height: 500px; overflow-y: auto;">
             <h2>Information</h2>
-            <div><b>AFK ON/OFF:</b> When turned on, it will send a pause key up event every x minutes to prevent camping.</div>
             <div><b>DETECT ON/OFF:</b> Turns rat bot on or off.</div>
             <div><b>ADD NAMES:</b> Paste names you want to be skipped (whitelisted) like this: Name1, Name2, Name3,...</div>
             <div><b>SOUND:</b> Plays a radar sound when a player is detected by default, but can be changed in the audio field.</div>
