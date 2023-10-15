@@ -27,7 +27,7 @@ After Tampermonkey has been installed, use the button below to add RatBot to you
 
 When RatBot is added to your Tampmonkey scripts, a menu appears when you open Aberoth in the browser. From this menu you can setup: your scout's name, webhook url, audio and whitelist.
 
-![image](https://github.com/Shikster/RatBot/assets/90510626/33684d7b-e614-42e2-afab-06ec228c0fb7)
+<img src="https://github.com/Shikster/RatBot/assets/90510626/33684d7b-e614-42e2-afab-06ec228c0fb7" width="300">
 
 
 #### Webhooks
