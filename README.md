@@ -4,9 +4,8 @@
 - Version number: 2.0
 
 <video autoplay loop style="width:50%; height: auto; position:absolute; z-index: -1;">
-  <source src="https://github.com/Shikster/RatBot/assets/90510626/a3aea17f-1997-42dc-a415-ad6d55780e39" type="video/mp4" />
+  <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/90510626/276558159-a3aea17f-1997-42dc-a415-ad6d55780e39.mp4" type="video/mp4" />
 </video>
-
 
 
 #### Features
