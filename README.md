@@ -3,9 +3,7 @@
 - Written by Shikii (and Sayob)
 - Version number: 2.0
 
-
-https://github.com/Shikster/RatBot/assets/90510626/c6f94b0e-85a0-484b-9d5d-8bbf4b0b7486
-
+https://github.com/Shikster/RatBot/assets/90510626/a3aea17f-1997-42dc-a415-ad6d55780e39
 
 #### Features
 - NEW! (version 2.0) Takes screenshots of enemies and posts them to the webhook! Only for enemies or PvP-enabled characters.
