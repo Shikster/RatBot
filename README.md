@@ -3,7 +3,11 @@
 - Written by Shikii (and Sayob)
 - Version number: 2.0
 
-https://github.com/Shikster/RatBot/assets/90510626/a3aea17f-1997-42dc-a415-ad6d55780e39
+<video autoplay loop style="width:50%; height: auto; position:absolute; z-index: -1;">
+  <source src="https://github.com/Shikster/RatBot/assets/90510626/a3aea17f-1997-42dc-a415-ad6d55780e39" type="video/mp4" />
+</video>
+
+
 
 #### Features
 - NEW! (version 2.0) Takes screenshots of enemies and posts them to the webhook! Only for enemies or PvP-enabled characters.
