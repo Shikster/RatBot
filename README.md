@@ -4,7 +4,7 @@
 - Version number: 2.0
 
 
-https://github.com/Shikster/RatBot/assets/90510626/423000ed-59f2-4181-96fc-d08a6dbe99fc
+https://github.com/Shikster/RatBot/assets/90510626/c6f94b0e-85a0-484b-9d5d-8bbf4b0b7486
 
 
 #### Features
