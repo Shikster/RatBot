@@ -97,7 +97,6 @@ function createSetupMenu() {
     `;
 
     setupContainer.innerHTML = `
-        <!-- Your setup menu HTML -->
         <div style="max-height: 500px; overflow-y: auto;">
             <h2>Information</h2>
             <div><b>DETECT ON/OFF:</b> Turns rat bot on or off.</div>
