@@ -282,6 +282,41 @@ viewNameListBtn.addEventListener('click', () => {
     displayNameListPopup();
 });
 
+//Shobcorps skill level parsing
+let playersList = [];
+
+const parseit = (data) => {
+    playersList = [];
+    var parser = new DOMParser();
+    var html = parser.parseFromString(data, 'text/html');
+    let table = html.querySelector('table');
+    table.querySelectorAll('tr').forEach((tr) => { 
+        let obj = {};
+        tr.querySelectorAll('td').forEach((td, i) => {
+            switch (i) {
+                case 0:
+                    obj.rank = td.textContent;
+                    break;
+                case 1:
+                    obj.name = td.textContent;
+                    break;
+                case 2:
+                    obj.skill = td.textContent;
+                    break;
+            }
+        });
+        playersList.push(obj);
+    });
+};
+
+const updatePlayersList = () => {
+    fetch('https://aberoth.com/highscore/Most_Skillful.html')
+        .then(r => r.text())
+        .then(data => parseit(data));
+};
+
+updatePlayersList();
+
 // Constants and variables for bot behavior
 const MY_NAME = GM_getValue("MY_NAME", "");
 const DISCORDURL = GM_getValue("DISCORDURL", "");
@@ -309,8 +344,8 @@ for (let key in app.game.Bc.DA) {
         // Push Invis into the array only if color is "white" and Invis hasn't been added yet.
         usersInRoom.push(username);
         invisFound = true; // Set the flag to true to indicate Invis has been added.
-    } else if (color === "#ffffff" || color === "#ffafaf" ) {
-        // Push other users with the specified colors into the array.
+    } else if (color === "#ffffff" || color === "#ffafaf" || color === "#ffd7af" ) {
+        // Push default, unfriendly and orange names
         if (!usersInRoom.includes(username)) {
             usersInRoom.push(username);
         }
@@ -343,7 +378,7 @@ for (let user of usersInRoom) {
     }
 }, 500);
 
-// Variable for controlling the sound
+// Sound menu
 let isSoundEnabled = true;
 const soundToggleButton = document.createElement('button');
 soundToggleButton.textContent = 'SOUND ON';
@@ -365,15 +400,15 @@ function dataURLtoFile(dataurl, filename) {
     while (n--) {
         u8arr[n] = bstr.charCodeAt(n);
     }
-    return new File([u8arr], filename, { type: mime });
+    return new File([u8arr], filename, { type: mime }); // This does not save any data locally
 }
 
 const postUser = (username) => {
+    const player = playersList.find(player => player.name === username); // Find the player in the skill level array
     const options = { hour: '2-digit', minute: '2-digit', timeZone: 'UTC', hour12: false };
     const currentTimeHere = new Date().toLocaleTimeString('en-US', { ...options, timeZone: 'Europe/Berlin' });
     const currentTimestamp = Math.floor(Date.now() / 1000);
-
-    const myName = GM_getValue("MY_NAME", ""); // Get the value from "MyName" field
+    const myName = GM_getValue("MY_NAME", ""); // Tampermonkey MY_NAME value
 
     if (!excludedNames.includes(username) && username !== myName) {
         if (isSoundEnabled) {
@@ -382,12 +417,10 @@ const postUser = (username) => {
                 const audio = new Audio(customSoundUrl);
                 audio.play();
             } else {
-                // If the custom sound URL is not set, play a default sound or handle it as needed.
                 const defaultSoundUrl = 'https://us-tuna-sounds-files.voicemod.net/cb9d618a-1795-4c5d-923a-61c767040b3e-1687765406207.mp3';
                 const audio = new Audio(defaultSoundUrl);
                 audio.play();
             }
-
             // Capture the game canvas and convert to a File
             var gameCanvas = document.getElementById('screen');
             var pngDataUrl = gameCanvas.toDataURL('image/png');
@@ -396,16 +429,22 @@ const postUser = (username) => {
             // Create a FormData object
             const formData = new FormData();
             formData.append('file', pngFile); // Append the screenshot file
-
             formData.append('username', 'Rat');
             formData.append('avatar_url', 'https://i.imgur.com/9SIkuLc.png');
-            formData.append('content', `I found: **${username}** <t:${currentTimestamp}:R>! Squeek!`);
 
+            let content = `I found: **${username}**`;
+            if (player) {
+                const skillContent = `**(${player.skill})** <t:${currentTimestamp}:R>! Squeek!`;
+                content += ` ${skillContent}`; // If there is skill level data in the PlayerList array, append it to playername
+            } else {
+                content += ` <t:${currentTimestamp}:R>! Squeek!`; // If no skill level data, post name either way
+            }
+            formData.append('content', content);
             fetch(
-                `${DISCORDURL}`,
+                `${DISCORDURL}`, // Fetch URL from Tampermonkey storage
                 {
                     method: 'POST',
-                    body: formData, // Use the FormData object as the request body
+                    body: formData,
                 }
             );
         }
