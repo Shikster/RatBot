@@ -3,7 +3,7 @@
 - Written by Shikii (and Sayob)
 - Version number: 2.1
 
-https://github.com/Shikster/RatBot/assets/90510626/7e6f3263-89b2-464c-b88b-7a54b832ae89
+https://github.com/Shikster/RatBot/assets/90510626/82d7ab8b-8b89-4436-8221-b3b815fa36a5
 
 #### Features
 - NEW! version 2.1: fetches data from aberoth highscores. Appends skill level to username if available.
@@ -30,6 +30,7 @@ When RatBot is added to your Tampmonkey scripts, a menu appears when you open Ab
 
 
 #### Webhooks
+**IMPORTANT: After setting the webhook via setup. Restart your browser!**
 If you want RatBot to send messages to your discord server, you may want to setup a webhook.
 This can be done by creating your own discord server (you need mod/admin perms), and then right clicking the setting cog in any channel (edit channel).
 Click on integrations, webhooks, and then New Webhook. The name for the webhook doesn't matter, as Rat Bot will override it with it's post function. Copy the WebHook URL and paste it into the SETUP (after Rat Bot has been installed). 
