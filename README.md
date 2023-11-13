@@ -1,12 +1,13 @@
 # RatBot
 - A scout bot for Aberoth!
 - Written by Shikii (and Sayob)
-- Version number: 2.0
+- Version number: 2.1
 
 https://github.com/Shikster/RatBot/assets/90510626/7e6f3263-89b2-464c-b88b-7a54b832ae89
 
 #### Features
-- NEW! (version 2.0) Takes screenshots of enemies and posts them to the webhook! Only for enemies or PvP-enabled characters.
+- NEW! version 2.1: fetches data from aberoth highscores. Appends skill level to username if available.
+- version 2.0: takes screenshots of enemies and posts them to the webhook! Only for enemies or PvP-enabled characters.
 - Autoscout based on a custom whitelist
 - Namelist is saved locally
 - Names added to the namelist are the names it skips scouting for
